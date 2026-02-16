@@ -1,0 +1,20 @@
+{{- if .Values.enabled }}
+apiVersion: network.azure.upbound.io/v1beta1
+kind: PrivateDNSZone
+metadata:
+  name: {{ required "clusterName is required" .Values.clusterName }}-{{ .Values.privateDnsZone.name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    crossplane.io/external-name: {{ .Values.privateDnsZone.name }}
+spec:
+  providerConfigRef:
+    name: {{ .Values.clusterName }}
+  forProvider:
+    resourceGroupName: {{ required "resourceGroupName is required" .Values.resourceGroupName }}
+    tags:
+      giantswarm.io/cluster: {{ .Values.clusterName }}
+      giantswarm.io/managed-by: {{ .Release.Name | quote }}
+      sigs.k8s.io/cluster-api-provider-azure/cluster/{{.Values.clusterName}}: owned
+{{- end -}}
