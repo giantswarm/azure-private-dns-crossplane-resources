@@ -2,24 +2,33 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "image": {
+        "enabled": {
+            "type": "boolean"
+        },
+        "clusterName": {
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "type": "string"
+        },
+        "privateDnsZone": {
             "type": "object",
             "properties": {
                 "name": {
                     "type": "string"
-                },
-                "tag": {
+                }
+            }
+        },
+        "virtualNetworkLink": {
+            "type": "object",
+            "properties": {
+                "name": {
                     "type": "string"
                 }
             }
         },
-        "registry": {
-            "type": "object",
-            "properties": {
-                "domain": {
-                    "type": "string"
-                }
-            }
+        "serviceType": {
+            "type": "string"
         }
     }
 }

@@ -1,0 +1,24 @@
+name: azure-private-dns-crossplane-resources
+serviceType: managed
+
+# Enable or disable the deployment of the Azure Private DNS Crossplane resources.
+enabled: false
+
+# -- Configure management policies of the azure resources.
+managementPolicies:
+  - "Observe"
+
+# Cluster name to use for labeling and naming resources.
+clusterName: ""
+# Resource group name to use for the Azure Private DNS resources.
+resourceGroupName: ""
+
+# Azure Private DNS Zone configuration.
+privateDnsZone:
+  # Name of the Azure Private DNS Zone to create.
+  name: "privatelink.blob.core.windows.net"
+
+# Azure Private DNS Zone Virtual Network Link configuration.
+virtualNetworkLink:
+  # Name of the Azure Private DNS Zone Virtual Network Link to create.
+  name: "blob-core-windows-net"
