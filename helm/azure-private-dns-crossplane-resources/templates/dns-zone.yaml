@@ -9,6 +9,10 @@ metadata:
   annotations:
     crossplane.io/external-name: {{ .Values.privateDnsZone.name }}
 spec:
+  {{- with .Values.managementPolicies }}
+  managementPolicies:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
   providerConfigRef:
     name: {{ .Values.clusterName }}
   forProvider:
