@@ -2,10 +2,10 @@
 #
 #    devctl
 #
-#    https://github.com/giantswarm/devctl/blob/87f30fd3b955a0daf6017834a776c222d93a207c/pkg/gen/input/workflows/internal/file/create_release.yaml.template
+#    https://github.com/giantswarm/devctl/blob/0df8c5e633bb1e4fd17c35525a7b382395526f22/pkg/gen/input/workflows/internal/file/create_release.yaml.template
 #
-
 name: Create Release
+
 on:
   push:
     branches:
@@ -19,19 +19,12 @@ on:
 permissions: {}
 
 jobs:
-  info:
-    uses: giantswarm/github-workflows/.github/workflows/create-release-info.yaml@main
-    permissions:
-      contents: read
-  create_release:
-    needs:
-      - info
-    if: ${{ needs.info.outputs.release == 'true' }}
+  create-release:
     uses: giantswarm/github-workflows/.github/workflows/create-release.yaml@main
+    with:
+      build-release-artifacts: false
+      fetch-deep-gitlog-for-build: true
+    secrets:
+      TAYLORBOT_GITHUB_ACTION: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: write
-    with:
-      version: "${{ needs.info.outputs.version }}"
-      changelog: "${{ needs.info.outputs.changelog }}"
-    secrets:
-      TAYLORBOT_GITHUB_ACTION: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
