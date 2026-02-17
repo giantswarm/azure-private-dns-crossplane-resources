@@ -1,0 +1,23 @@
+{{- if .Values.enabled }}
+apiVersion: network.azure.upbound.io/v1beta1
+kind: VirtualNetwork
+metadata:
+  name: {{ required "clusterName is required" .Values.clusterName }}-vnet
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+  annotations:
+    crossplane.io/external-name: {{ .Values.clusterName }}-vnet
+spec:
+  # We only want to observe the VNet, as it is expected to be created by another process, and we don't want Crossplane to manage its lifecycle.
+  managementPolicies:
+    - Observe
+  providerConfigRef:
+    name: {{ .Values.clusterName }}
+  forProvider:
+    resourceGroupName: {{ required "resourceGroupName is required" .Values.resourceGroupName }}
+    tags:
+      giantswarm.io/cluster: {{ .Values.clusterName }}
+      giantswarm.io/managed-by: {{ .Release.Name | quote }}
+      sigs.k8s.io/cluster-api-provider-azure/cluster/{{.Values.clusterName}}: owned
+{{- end -}}

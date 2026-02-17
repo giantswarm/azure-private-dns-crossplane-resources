@@ -25,7 +25,7 @@ spec:
     {{- else }}
     virtualNetworkIdSelector:
       matchLabels:
-        giantswarm-cluster: {{ .Values.clusterName }}
+        giantswarm.io/cluster: {{ .Values.clusterName }}
     {{- end }}
     registrationEnabled: false
     tags:
