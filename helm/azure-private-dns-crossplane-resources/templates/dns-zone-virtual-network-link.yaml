@@ -29,7 +29,5 @@ spec:
     {{- end }}
     registrationEnabled: false
     tags:
-      giantswarm.io/cluster: {{ .Values.clusterName }}
-      giantswarm.io/managed-by: {{ .Release.Name | quote }}
-      sigs.k8s.io/cluster-api-provider-azure/cluster/{{.Values.clusterName}}: owned
+      {{- include "tags.common" . | nindent 6 }}
 {{- end -}}
