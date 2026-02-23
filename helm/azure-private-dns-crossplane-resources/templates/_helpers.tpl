@@ -36,3 +36,12 @@ giantswarm.io/service-type: {{ .Values.serviceType }}
 giantswarm.io/cluster: {{ .Values.clusterName | quote }}
 helm.sh/chart: {{ include "chart" . | quote }}
 {{- end -}}
+
+{{/*
+Common crossplane resource tags
+*/}}
+{{- define "tags.common" -}}
+app: {{ .Release.Name | quote }}
+cluster: {{ .Values.clusterName }}
+installation: {{ .Values.clusterName }}
+{{- end -}}
